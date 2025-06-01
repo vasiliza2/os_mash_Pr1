@@ -1,0 +1,191 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API для прогнозирования качества вина",
+    "version": "1.0.0",
+    "description": "API для предсказания качества вина."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:5000",
+      "description": "Локальный сервер разработки"
+    }
+  ],
+  "paths": {
+    "/predict": {
+      "post": {
+        "summary": "Предсказать качество вина",
+        "description": "Принимает физико-химические характеристики вина и возвращает предсказанную оценку качества.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WineFeatures"
+              },
+              "examples": {
+                "sample_wine_data": {
+                  "summary": "Пример данных для красного вина",
+                  "value": {
+                    "fixed acidity": 7.4,
+                    "volatile acidity": 0.70,
+                    "citric acid": 0.00,
+                    "residual sugar": 1.9,
+                    "chlorides": 0.076,
+                    "free sulfur dioxide": 11.0,
+                    "total sulfur dioxide": 34.0,
+                    "density": 0.9978,
+                    "pH": 3.51,
+                    "sulphates": 0.56,
+                    "alcohol": 9.4
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Предсказанное качество вина",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "quality_prediction": {
+                      "type": "integer",
+                      "description": "Предсказанное качество вина (обычно от 3 до 8)",
+                      "example": 5
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Некорректный запрос или отсутствующие данные",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Ошибка обработки запроса: Отсутствует обязательный признак: 'fixed acidity'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервера",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Модель или стандартизатор не загружены. Проверьте логи сервера."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "WineFeatures": {
+        "type": "object",
+        "required": [
+          "fixed acidity",
+          "volatile acidity",
+          "citric acid",
+          "residual sugar",
+          "chlorides",
+          "free sulfur dioxide",
+          "total sulfur dioxide",
+          "density",
+          "pH",
+          "sulphates",
+          "alcohol"
+        ],
+        "properties": {
+          "fixed acidity": {
+            "type": "number",
+            "format": "float",
+            "description": "Фиксированная кислотность"
+          },
+          "volatile acidity": {
+            "type": "number",
+            "format": "float",
+            "description": "Летучая кислотность"
+          },
+          "citric acid": {
+            "type": "number",
+            "format": "float",
+            "description": "Лимонная кислота"
+          },
+          "residual sugar": {
+            "type": "number",
+            "format": "float",
+            "description": "Остаточный сахар"
+          },
+          "chlorides": {
+            "type": "number",
+            "format": "float",
+            "description": "Хлориды"
+          },
+          "free sulfur dioxide": {
+            "type": "number",
+            "format": "float",
+            "description": "Свободный диоксид серы"
+          },
+          "total sulfur dioxide": {
+            "type": "number",
+            "format": "float",
+            "description": "Общий диоксид серы"
+          },
+          "density": {
+            "type": "number",
+            "format": "float",
+            "description": "Плотность"
+          },
+          "pH": {
+            "type": "number",
+            "format": "float",
+            "description": "pH"
+          },
+          "sulphates": {
+            "type": "number",
+            "format": "float",
+            "description": "Сульфаты"
+          },
+          "alcohol": {
+            "type": "number",
+            "format": "float",
+            "description": "Спирт"
+          }
+        },
+        "example": {
+          "fixed acidity": 7.4,
+          "volatile acidity": 0.70,
+          "citric acid": 0.00,
+          "residual sugar": 1.9,
+          "chlorides": 0.076,
+          "free sulfur dioxide": 11.0,
+          "total sulfur dioxide": 34.0,
+          "density": 0.9978,
+          "pH": 3.51,
+          "sulphates": 0.56,
+          "alcohol": 9.4
+        }
+      }
+    }
+  }
+}
