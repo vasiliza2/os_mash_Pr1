@@ -15,16 +15,13 @@
 
 Проект организован следующим образом:
 
-```
 
-        ├── WineQT.csv                     # Исходные данные о вине
-        ├── app.py                         # Flask-сервер для API
-        ├── best_wine_quality_model.pkl    # Обученная модель
-        ├── scaler.pkl                     # Обученный стандартизатор данных
-        ├── wine.ipynb                     # Jupyter Notebook с этапами обучения
-        ├── requirements.txt               # Зависимости Python
-        └── swagger_spec.json              # OpenAPI (Swagger) спецификация API
-```
+ WineQT.csv                     # Исходные данные о вине
+ app.py                         # Flask-сервер для API
+ best_wine_quality_model.pkl    # Обученная модель
+ scaler.pkl                     # Обученный стандартизатор данных 
+ requirements.txt               # Зависимости Python
+ swagger_spec.json              # OpenAPI (Swagger) спецификация API
 
 -----
 
